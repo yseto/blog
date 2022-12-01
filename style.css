@@ -1,0 +1,22 @@
+html {
+  font-family: sans-serif;
+}
+#metadata__title a {
+  font-size: 0.8rem;
+  color: #333;
+  text-decoration: none;
+}
+
+#metadata__date {
+  font-size: 0.8rem;
+  color: #333;
+  border-bottom: 1px solid #ccc;
+}
+
+#main {
+  width: 860px;
+}
+#main img {
+  max-width: 100%;
+}
+
