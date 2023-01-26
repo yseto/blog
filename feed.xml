@@ -2,6 +2,11 @@
 <channel>
 <title>archive</title>
 <item>
+<title>VPSの疎通確認をいい感じにする</title>
+<pubDate>Thu, 26 Jan 2023 00:00:00 UTC</pubDate>
+<link>https://yseto.github.io/blog/2023/01/26/000000.html</link>
+</item>
+<item>
 <title>趣味の Web アプリケーションを Go で書き換える</title>
 <pubDate>Sun, 11 Dec 2022 00:00:00 UTC</pubDate>
 <link>https://yseto.github.io/blog/2022/12/11/000000.html</link>

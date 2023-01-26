@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>VPSの疎通確認をいい感じにする</title>
+
+<link rel="stylesheet" href="/blog/style.css" type="text/css" />
+</head>
+<body>
+
+<div id="metadata__title">
+  <a href="/blog/" aria-label="back to index">yseto.github.io/blog</a>
+</div>
+
+<h1>VPSの疎通確認をいい感じにする</h1>
+<div id="metadata__date">Thu Jan 26 00:00:00 2023</div>
+<div id="main">
+
+<p>趣味の用途でいくつかのVPSを使っている。最近のVPSは国内事業者、海外事業者共に、IPv6の対応が進んでおり、何不自由なく使える。ところによっては、VPSのインスタンスに対してIPv6のみを割り当てるプランがあるVPS事業者（具体的には<a href="https://www.vultr.com/">Vultr</a>）もある。</p>
+<p>VPSは、ansibleで構成管理しており、原因は探りきれていないが時々iptablesへのルール適用か何かがうまくいかず、外部からの接続をすべてはじいていた。というようなことがある。そういう場合に限って、ansibleで適用するためのsshのコネクションは生きたままだったりするので、気づくのに遅れることがある。可能であれば早く気づきたい。</p>
+
+<p>VPSへ外界から接続が可能かを調べるには、便利な商用サービスはたくさんあるが、IPv4とIPv6のアドレスを共に個別に確認したい場合に、自分では手ごろなサービスを見つけることができなかった。また、自分が普段使っている<a href="https://pushover.net/" rel="nofollow">Pushover</a>という通知する仕組みに対応したものも、あまり見かけない。</p>
+<p>こういう場合はなんだかんだ作ったほうがだいたい早かったりする。プライベートなものしか乗っていないので、全世界から丁寧に監視するまでもない。そのため、自宅を監視元とすることにし、手ごろなSBCなどから監視することにした。</p>
+
+<p>作ったものは、<a href="https://github.com/yseto/vps-uptime" rel="nofollow">https://github.com/yseto/vps-uptime</a>に置くことにした。</p>
+<p>設定はYAMLで管理するようにし、crondで手軽に起動するようにした。復旧した場合は通知をする。であるとか、通知の周期を調整するとかもやろうと思えば制御できるが、そもそも復旧させるのは自分なので、ホストがダウンしてるぽいと判断したら復旧させるまで通知が届く簡単な仕様となっている。</p>
+
+</div>
+</body>
+</html>
