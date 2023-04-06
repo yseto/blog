@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>ドメインをGandiに移す</title>
+
+<link rel="stylesheet" href="/blog/style.css" type="text/css" />
+</head>
+<body>
+
+<div id="metadata__title">
+  <a href="/blog/" aria-label="back to index">yseto.github.io/blog</a>
+</div>
+
+<h1>ドメインをGandiに移す</h1>
+<div id="metadata__date">Fri Apr  7 00:00:00 2023</div>
+<div id="main">
+
+<p>持っているドメインは、長年色々なレジストラを経ていたが、Let's Encryptのdns-01 challengeを使ってサーバー証明書を利用、更新するようになってからは、Amazon Route 53を利用している。ドメインのレジストラとDNSサーバーを両方任せる形にしていた。</p> <p>Amazon Route 53は、Amazon Web Servicesを使ってサービスを構築する時には大変便利であるが、そうでない場合、あまりうれしくない。と感じている。というのも、1ホストゾーンごとに、0.5USD払う必要がある。1年で6USDとなるので、ドメインの更新費用とくわえてこれが必要経費となる。</p>
+<p>なかなかの費用感があるので、もう少し下げたい。しかし、国内のドメインレジストラは似たり寄ったりの費用感であったり、DNSレコードをAPIで操作するのに、支障があるサービスなどもあり、レジストラ、DNSをAmazon Route 53に任せておくのが良いと思っていた。</p>
+
+<p>Gandi.netだとAPIが充実しているのでDNS周りの課題も解決ができ、Amazon Route 53で取り扱っているドメインの中には、Gandi.netのリセラーというものもある。ということで、細かくは見ていないものの、レジストラにおけるabuseなどの対応については、大きな差はないのではないか？と思い、Gandi.netにドメインを移管することにした。</p>
+<p>ドメインの移管については、通常のドメイン同様の手続きでAuthCodeを使って移管した。数時間以内に移管を完了できた。</p>
+
+<p>移管した後は、Gandi.netのLive DNSが利用できる状態になるので、BIND形式でゾーン情報を用意して移行した。特に手間取ることもなく、管理画面も戸惑うところはあったが、使いにくいと感じることはなかった。</p>
+<hr/>
+
+<p>これまで、<a href="https://github.com/barnybug/cli53">cli53</a>というツールを使って、コンソールからのレコード操作をしていた。terraformなどを使うまでもない場合には、このコマンドなかなか便利なのだが、Gandi.netについてはそういったCLIツールがなさそうであった。</p>
+<p>そのため、このcli53のインタフェースを真似て、CLIツールを作ることにした。<a href="https://api.gandi.net/docs/livedns/">Gandi.net LiveDNS API</a>というページにドキュメントが揃っているので、それを見ながら、とりあえず欲しい機能を実装した。</p>
+
+<p><a href="https://github.com/yseto/gandi-livedns-cli">yseto/gandi-livedns-cli</a>にコードを置いている。cli53での機能を全部網羅できている訳ではないので、不便に感じたら増やすなどしたいと思っている。</p>
+
+</div>
+</body>
+</html>
