@@ -2,6 +2,11 @@
 <channel>
 <title>archive</title>
 <item>
+<title>Cloudflare R2 を監視する</title>
+<pubDate>Tue, 29 Aug 2023 00:00:00 UTC</pubDate>
+<link>https://yseto.github.io/blog/2023/08/29/000000.html</link>
+</item>
+<item>
 <title>ドメインをGandiに移す</title>
 <pubDate>Fri, 07 Apr 2023 00:00:00 UTC</pubDate>
 <link>https://yseto.github.io/blog/2023/04/07/000000.html</link>
@@ -20,11 +25,6 @@
 <title>mackerel でネットワークスイッチのトラフィックを監視する</title>
 <pubDate>Sat, 03 Dec 2022 00:00:00 UTC</pubDate>
 <link>https://yseto.github.io/blog/2022/12/03/000000.html</link>
-</item>
-<item>
-<title>アウトプットとは</title>
-<pubDate>Fri, 02 Dec 2022 00:00:00 UTC</pubDate>
-<link>https://yseto.github.io/blog/2022/12/02/000000.html</link>
 </item>
 </channel>
 </rss>

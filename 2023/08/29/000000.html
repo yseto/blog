@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>Cloudflare R2 を監視する</title>
+
+<link rel="stylesheet" href="/blog/style.css" type="text/css" />
+</head>
+<body>
+
+<div id="metadata__title">
+  <a href="/blog/" aria-label="back to index">yseto.github.io/blog</a>
+</div>
+
+<h1>Cloudflare R2 を監視する</h1>
+<div id="metadata__date">Tue Aug 29 00:00:00 2023</div>
+<div id="main">
+
+<p>最近、Cloudflareの勢いを感じているので、アカウントを作りCloudflare R2を試してみた。</p> <p>Cloudflare R2は、色々なクラウドベンダーが実装しているようなオブジェクトストレージの一種で、Amazon Simple Storage Service (Amazon S3)互換のリクエストで操作ができる。Amazon S3は、あまりにも有名だし、他社の似た製品などと比較しても記事の趣旨から外れるので、割愛する。</p>
+<p>オブジェクトストレージとしての操作方法はわかったので、実際に使用している容量であるとか、APIコール数（Cloudflare R2は、APIの種類やコール数で課金額が変わる）などをある程度見えるようにしておきたい。</p>
+
+<p><a href="https://qiita.com/khayama/items/9c82d35852eaaae7c38a">Cloudflare GraphQL API からトラフィック量を過去1年に遡って集計する - Qiita</a>にあるような記事を参照したところ、Cloudflareの動作状態は、Cloudflare GraphQL APIから取得することができそうであることがわかった。</p>
+<p>そして、Cloudflare R2の状態を同様に、GraphQLを使ってGrafanaのダッシュボードに表示させる記事 <a href="https://qiita.com/khayama/items/305bbf005b99b8ab4d39">Cloudflare R2 の GraphQL Analytics を Grafana で可視化する - Qiita</a> を見つけた。参考にさせてもらう。記事で紹介されているクエリの実物やスクリーンショット、GitHubレポジトリにあるGrafanaのダッシュボードをインポートするファイルなどから、どういうクエリの構造になっているか、どういうものが指標として表示できると嬉しいかなどを調べた。</p>
+
+<p>ということで、<a href="https://ja.mackerel.io">Mackerel</a> で使う想定で実装したのが、<a href="https://github.com/yseto/mackerel-plugin-cloudflare-r2">yseto/mackerel-plugin-cloudflare-r2 - GitHub</a>になる。 APIのコール数や、ストレージに保存されているオブジェクト数であるとか、トラフィックの様子がそれなりに見えるようになった。この mackerel-plugin-cloudflare-r2 は、Mackerelのコマンドラインツール、mkrというもので、簡単にインストールができるようにしてある。</p>
+<figure>
+  <img src="/blog/static/2023/08/mackerel-cloudflare-r2.png" alt="メトリックが取得できてる様子">
+  <figcaption>メトリックが取得できてる様子</figcaption>
+</figure>
+<p>実装時に気づいたこととして、反映のスピードが緩やかなデータがあったり、現在時刻のデータがすぐに取得できる訳ではないので、オフセットを持たせて状態を取得する必要があったりするなど、若干の工夫が必要だった。それ以外には、特段困ることなく、手元でデバッグした限りだとほぼリアルタイムにAPIコール数などが取得できたので、一定の効果はありそう。</p>
+
+<p>これはまだ作ったばかりで、手始めに状態を把握できる程度のものであり、成熟している状態ではない。したがって、実際のAPIコール数、それに伴う課金額などは、Cloudflareからの明細(この記事を書いている当人は、まだ使いだしたばかりなので、具体的な明細を目にしたことがない)などで確認する必要はあると思われる。</p>
+<p>Rate Limitについても一応確認した。<a href="https://developers.cloudflare.com/analytics/graphql-api/limits/">Limits · Cloudflare Analytics docs</a>によると、<blockquote>The default quota is 300 GraphQL queries over 5-minute window. It allows a user to run at least 1 query every second or do a burst of 300 queries and then wait 5 minutes before issuing another query.</blockquote>とあったので、このプラグインを実行しただけでは、Rate Limitに達することもないはず。</p>
+
+<h2>まとめ</h2>
+<ul>
+  <li>Cloudflare R2の状態を可視化するための手ほどきとなる詳細な記事が存在する。大変参考にさせていただいた</li>
+  <li>記事の内容を元に、Goでプログラムを作り、Mackerelで可視化させた</li>
+</ul>
+
+</div>
+</body>
+</html>
